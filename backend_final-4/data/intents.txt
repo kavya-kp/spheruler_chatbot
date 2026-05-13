@@ -1,0 +1,129 @@
+INTENT: COMPANY_OVERVIEW
+KEYWORDS: company,about,overview,startup,spheruler
+WHAT: Spheruler Solutions is a deep-tech startup offering 3D imaging and digital visualization software for product inspection, design, and analysis. We combine advanced photography with geometric algorithms to create interactive visualization tools. Based in Chennai, India, we're pioneering new approaches to visual communication through our patented imaging technology. The name "Spheruler" combines "sphere" (representing our spherical imaging approach) with "ruler" (symbolizing precision and measurement).
+WHY: We exist to transform how businesses interact with visual data, making advanced imaging technology accessible and practical for various industries.
+HOW: We develop software by combining photography, geometric algorithms, and interactive visualization techniques to process images into 3D formats.
+FOLLOWUPS: products,services,vision,technology
+
+INTENT: FOUNDERS_INFO
+KEYWORDS: founder,founders,who,started,founded,karthik,guru,created,owner
+WHAT: Spheruler Solutions was founded by Karthik and Guru. They are the visionaries behind our innovative 3D imaging technology and patented solutions. You can reach them at karthik@spherulersolutions.com and guru@spherulersolutions.com.
+FOLLOWUPS: contact,about,vision
+
+INTENT: COMPANY_LOCATION
+KEYWORDS: where,location,address,situated,based,office
+WHAT: Spheruler Solutions is located at IITM Research Park, Kanagam Road, Taramani, Chennai, Tamil Nadu, India. We're part of the prestigious IIT Madras Research Park ecosystem, which provides access to cutting-edge research facilities and a vibrant tech community.
+WHERE: IITM Research Park, Kanagam Road, Taramani, Chennai, Tamil Nadu, India.
+FOLLOWUPS: contact,vision,about
+
+INTENT: NAMING_ORIGIN
+KEYWORDS: named,name,called,naming,origin,spheruler,mean,meaning,title
+WHAT: The name "Spheruler" is a combination of two words — "sphere" and "ruler". "Sphere" represents our spherical imaging approach, where we capture 360-degree views of objects. "Ruler" symbolizes precision and measurement, which is central to our technology. Together, "Spheruler" reflects our mission of delivering precise, spherical 3D imaging solutions.
+WHY: The name "Spheruler" was carefully chosen to reflect the essence of our technology. "Sphere" captures our spherical imaging approach, while "ruler" embodies the precision and measurement that define our work. The combination of these two ideas perfectly represents what Spheruler Solutions stands for.
+HOW: The name came together by merging "sphere" — for our spherical 3D imaging technology — and "ruler" — representing the precision and measurement standards we uphold. This blend captures the spirit of what we do as a deep-tech startup.
+FOLLOWUPS: about,technology,products,vision
+
+INTENT: WHY_NEED_SPHERULER
+KEYWORDS: need,spheruler,benefit,use,should,choose,pick,worth,value,advantage,help,useful,important
+WHAT: Spheruler gives you a smarter way to communicate and inspect your products visually. Instead of flat, static photos that show only one angle, Spheruler lets your customers and teams explore products interactively — rotating, zooming, and examining every surface detail in real time. Whether you are in manufacturing, aerospace, defence, e-commerce, or education, Spheruler helps you capture, edit, and render 3D objects with precision and clarity that traditional imaging simply cannot match.
+WHY: A single photo is never enough — a physical product can look completely different from different angles. Spheruler was built to solve exactly this problem. Our patented Four-Circle 3D Image Format captures every viewpoint in one compact digital file, giving your business richer product presentations, faster inspection workflows, and a professional edge that builds buyer confidence and reduces costly errors.
+HOW: Using our FCF and AccuPan software, you capture photographs from mathematically precise angles around your object. Our geometric algorithms then combine them into a single interactive 3D format that anyone can explore on screen — no special hardware needed, just powerful software built on patented technology recognised in both India and the United States.
+FOLLOWUPS: products,demo,technology,mission
+
+INTENT: COMPANY_VISION
+KEYWORDS: vision,purpose,goal,innovate,delight,customers,imaging,solutions,exist,existence,founded,reason,mission
+WHAT: Our vision is to innovate and delight customers with elegant 3D imaging solutions that transform visual communication. We aim to be a global leader in imaging technology, making advanced visualization accessible across industries.
+WHY: We focus on innovation to address challenges in visual communication and inspection using imaging technologies. Traditional imaging methods often fall short in providing the detail and interactivity modern businesses need.
+HOW: We achieve this through cutting-edge research, innovative software development, and close collaboration with customers to understand their needs.
+FOLLOWUPS: mission,technology,products
+
+INTENT: COMPANY_MISSION
+KEYWORDS: mission,goals,objectives,deliver,standards,purpose
+WHAT: Our mission is threefold: meet client needs for effective visual communication, standardize image-based surface data formats, and deliver novel imaging innovations. This drives everything from product development to customer support.
+WHY: The imaging industry lacks standardization and many businesses struggle with ineffective visual tools. We address these real pain points.
+HOW: We develop standardized imaging formats, create user-friendly software aligned with industry needs, and maintain close client relationships to solve real-world problems.
+FOLLOWUPS: vision,technology,products
+
+INTENT: PRODUCTS_OVERVIEW
+KEYWORDS: products,offerings,solutions,software,tools,specialised,specialized,specialize,speciality,expertise,expert,spheruler
+WHAT: Spheruler specialises in 3D imaging and digital visualization software for product designing, automated inspection and analysis across manufacturing, aerospace, defence, and education sectors. Our core products are FCF (Four-Circle Format) imaging software for interactive 3D product capture, and AccuPan for 360-degree panoramic visualization. We combine advanced photography with geometric algorithms to serve industries that need precise, interactive visual communication.
+HOW: Products work by capturing multiple images from calculated angles, processing them through proprietary algorithms, and rendering them into interactive 3D formats users can explore and analyze.
+FOLLOWUPS: fcf,accupan,demo,services,technology
+
+INTENT: PRODUCT_FCF
+KEYWORDS: fcf,four,circle,format,product,imaging,software,camera
+WHAT: FCF (Four-Circle Image Format) provides a comprehensive solution for capturing photographs of products from many precise angles, combining them into a single digital image format, and rendering a realistic interactive image on viewer screen. A physical object can have innumerable images depending on the view point, and our FCF technology handles this elegantly.
+HOW: We capture photographs from precise angles around the object, combine them into our patented single digital image format, then render realistic interactive images that viewers can manipulate on screen for complete product visualization.
+WHY: Physical objects can be photographed from countless viewpoints. FCF provides a complete solution that captures all necessary angles and combines them efficiently.
+FOLLOWUPS: accupan,demo,indianpatent,uspatent,patentimage,technology
+
+INTENT: PRODUCT_ACCUPAN
+KEYWORDS: accupan,panoramic,demo,product,interactive,rendering,visualization,360,spherical
+WHAT: AccuPan creates 360-degree panoramic photographs that record the full spherical image of scenes. Our rendering software then generates interactive views. The AccuPan program is based on a rigorous geometrical algorithm that accurately mimics user actions (mouse/touch-screen) for the best viewing experience.
+HOW: AccuPan captures 360-degree spherical images of entire scenes, then uses rigorous geometric algorithms to render interactive views that respond accurately to mouse and touch-screen interactions, providing an immersive viewing experience.
+WHY: Traditional panoramas lack precision in user interaction. Our geometrical algorithm ensures that viewer actions are accurately translated into natural, intuitive navigation.
+FOLLOWUPS: fcf,demo,services,technology
+
+INTENT: PRODUCT_DEMO
+KEYWORDS: demo,demonstration,interactive,product,imaging,visualization,showcase
+WHAT: Our Products Demo section provides interactive showcases where visitors can experience our imaging technology firsthand. See how objects are captured and presented as interactive 3D visualizations you can rotate, zoom, and examine from any angle.
+HOW: Demos capture multiple images from calculated angles, process them through our proprietary algorithms, and render them as interactive formats manipulated in real-time through simple controls.
+LINK: https://www.spherulersolutions.com/#products
+LINK_LABEL: View Demo on our Website
+FOLLOWUPS: fcf,accupan,products,technology
+
+INTENT: TECHNOLOGY_INFO
+KEYWORDS: how,technology,technical,tech,geometric,algorithms,spherical,3d,imaging,capture,photographs,work,works
+WHAT: Our technology fuses photography, mathematics, and computer science. We capture photographs from mathematically determined angles, then process them through geometric and spherical algorithms to create interactive 3D visual formats that maintain photographic quality.
+HOW: The process involves three stages: capture (photographing from specific calculated angles ), processing (algorithms analyze images and build geometric frameworks), and rendering (converting to interactive formats with smooth viewpoint transitions).
+WHY: Traditional photography captures only one viewpoint while full 3D scanning is expensive and time-consuming. We bridge this gap using photographic images processed to unlock 3D information and interactivity.
+FOLLOWUPS: products,indianpatent,uspatent,mission
+
+INTENT: PATENT_INFO
+KEYWORDS: patent,patents,intellectual,property,innovation
+WHAT: We hold patents for innovative 3D imaging technology in both India and the United States. Our Four-Circle Image Format is protected by Indian Patent (granted July 24, 2017) and U.S. Patent (granted November 9, 2021). These patents cover our unique methods for capturing, coding, and representing 3D surface data.
+WHY: Patents protect our technological edge, establish industry credibility, provide licensing opportunities, and create barriers to entry for competitors.
+HOW: Our patented methods involve capturing complete surface details, coding them into efficient image formats, and representing shape and color data of 3D objects in innovative ways.
+FOLLOWUPS: indianpatent,uspatent,patentimage,technology,products
+
+INTENT: INDIANPATENT
+KEYWORDS: indian,india,patent,2017,july,digital,coding,shape,color
+WHAT: Our Indian Patent titled "Digital Image Coding of Shape and Color Data of the Outer Surface of 3-D Objects" was granted on July 24, 2017 with a 20-year term under the Indian Patents Act, 1970. The method captures complete surface detail of an object in a single image. The square array raster graphics image is divided into four quadrants, each containing a maximum sized full circle zone to store separately the front/back and shape/color data of the object.
+HOW: The patented method divides a square raster image into four quadrants. Each quadrant contains a full circle zone that separately stores front/back views and shape/color data, enabling complete surface representation in one image.
+IMAGE: Yes, patent diagram available for display
+IMAGE_FILE: indian_patent.png
+FOLLOWUPS: uspatent,patentimage,patents,technology,fcf
+
+INTENT: USPATENT
+KEYWORDS: us,usa,american,united,states,patent,2021,november,method,system
+WHAT: Our U.S. Patent titled "Method of Representing Shape and Color Data of 3-D Objects" was granted on November 9, 2021 under U.S. patent law. The invention describes a method and system for generating a coded image format representing surface data of a 3-dimensional object. It includes superposing an imaginary spherical surface over the object based on a reference point within the object.
+HOW: The patented method superimposes an imaginary spherical surface over the 3D object using an internal reference point, then generates a coded image format that represents the complete surface data systematically.
+IMAGE: Yes, patent diagram available for display
+IMAGE_FILE: us_patent.png
+FOLLOWUPS: indianpatent,patentimage,patents,technology,fcf
+
+INTENT: PATENTIMAGE
+KEYWORDS: patent,image,diagram,format,picture,show,visual
+WHAT: Here are the patent diagrams for our Four-Circle 3D Image Format — both our Indian Patent (granted July 24, 2017) and our U.S. Patent (granted November 9, 2021). These technical diagrams illustrate the geometric arrangement of four capture positions around objects and how images combine to create smooth interactive viewing. Click any image to enlarge it.
+HOW: The diagrams illustrate spatial relationships between capture positions, geometric transformations applied, and how the data structure supports efficient storage and retrieval of 3D surface data from any viewpoint.
+IMAGE: Yes, patent diagram available for display
+IMAGE_FILES: indian_patent.png,us_patent.png
+FOLLOWUPS: indianpatent,uspatent,patents,technology,products
+
+INTENT: CONTACT_INFO
+KEYWORDS: contact,email,phone,reach,communicate,get,touch
+WHAT: Contact us at karthik@spherulersolutions.com or guru@spherulersolutions.com for product inquiries, demonstrations, partnerships, or technical questions. We typically reply within one business day.
+HOW: Email is the most effective contact method, allowing us to provide detailed responses and share relevant documentation. In-person meetings at our Chennai office can be arranged by appointment.
+FOLLOWUPS: location,products,demo,founders
+
+INTENT: SERVICES_OVERVIEW
+KEYWORDS: services,service,consulting,support,help,assistance
+WHAT: We offer comprehensive services for product inspection, analysis, and visualization including implementation support, custom development, training, and ongoing technical assistance. Services range from consultation and needs assessment to custom configuration, team training, system integration, and continuous support.
+HOW: Services are delivered through our imaging software tools combined with expert support. We offer flexible delivery models from cloud-based to on-premise installations, typically starting with pilot projects before full deployment.
+FOLLOWUPS: products,contact,technology
+
+INTENT: TIMEINFO
+KEYWORDS: when,time,year,date,established,founded,started,company
+WHAT: Spheruler Solutions was founded and has been active since at least 2017, when our Indian Patent for the Four-Circle 3D Image Format was granted on July 24, 2017. Our U.S. Patent followed on November 9, 2021. We continue to develop cutting-edge imaging technology and serve clients worldwide.
+WHEN: Spheruler Solutions has been active since at least 2017 — our Indian Patent for the Four-Circle 3D Image Format was granted on July 24, 2017, and our U.S. Patent was granted on November 9, 2021.
+FOLLOWUPS: founders,indianpatent,uspatent,about

@@ -1,0 +1,859 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spheruler — AI Assistant</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Karla:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --cream:       #F6F1E9;
+            --cream-dark:  #EDE7DB;
+            --ink:         #1C1812;
+            --ink-mid:     #3D3830;
+            --ink-light:   #7A7268;
+            --ink-faint:   #B5AFA7;
+            --blue:        #1A54FF;
+            --blue-dark:   #1040CC;
+            --blue-tint:   #EEF2FF;
+            --rule:        #D8D2C8;
+            --rule-strong: #B5AFA7;
+            --white:       #FFFFFF;
+            --red-soft:    #C0392B;
+
+            --font-display: 'Cormorant Garamond', Georgia, serif;
+            --font-body:    'Karla', system-ui, sans-serif;
+            --font-mono:    'DM Mono', monospace;
+        }
+
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+        html, body {
+            height: 100%;
+            font-family: var(--font-body);
+            background: var(--cream);
+            color: var(--ink);
+        }
+
+        /* ── Page layout ── */
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: stretch;
+            min-height: 100vh;
+        }
+
+        .shell {
+            width: 100%;
+            max-width: 780px;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            border-left: 1px solid var(--rule);
+            border-right: 1px solid var(--rule);
+            background: var(--white);
+        }
+
+        /* ── Header ── */
+        .header {
+            padding: 0 32px;
+            border-bottom: 1px solid var(--rule);
+            background: var(--white);
+            flex-shrink: 0;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        .header-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 64px;
+            gap: 16px;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 11px;
+        }
+
+        .brand-mark {
+            width: 32px;
+            height: 32px;
+            background: var(--ink);
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .brand-mark svg { display: block; }
+
+        .brand-name {
+            font-family: var(--font-display);
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--ink);
+            letter-spacing: 0.02em;
+            line-height: 1;
+        }
+
+        .brand-name em {
+            font-style: italic;
+            font-weight: 400;
+            color: var(--blue);
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .status-badge {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 11.5px;
+            font-weight: 500;
+            font-family: var(--font-mono);
+            color: var(--ink-light);
+            letter-spacing: 0.02em;
+        }
+
+        .dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: #2ECC71;
+            flex-shrink: 0;
+        }
+
+        .dot.off { background: var(--red-soft); }
+
+        /* thin colored rule under header */
+        .header-rule {
+            height: 2px;
+            background: linear-gradient(90deg, var(--blue) 0%, var(--blue) 120px, var(--rule) 120px);
+        }
+
+        /* ── Messages ── */
+        .messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 0;
+        }
+
+        .messages::-webkit-scrollbar { width: 3px; }
+        .messages::-webkit-scrollbar-thumb { background: var(--rule-strong); }
+
+        /* ── Welcome ── */
+        .welcome {
+            padding: 52px 32px 40px;
+            border-bottom: 1px solid var(--rule);
+        }
+
+        .welcome-eyebrow {
+            font-family: var(--font-mono);
+            font-size: 11px;
+            font-weight: 500;
+            color: var(--blue);
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            margin-bottom: 16px;
+        }
+
+        .welcome-headline {
+            font-family: var(--font-display);
+            font-size: 40px;
+            font-weight: 500;
+            line-height: 1.1;
+            color: var(--ink);
+            margin-bottom: 12px;
+            letter-spacing: -0.01em;
+        }
+
+        .welcome-headline em {
+            font-style: italic;
+            color: var(--blue);
+        }
+
+        .welcome-sub {
+            font-size: 15px;
+            color: var(--ink-light);
+            line-height: 1.6;
+            max-width: 440px;
+            font-weight: 300;
+            margin-bottom: 28px;
+        }
+
+        .chips {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .chip {
+            background: var(--cream);
+            border: 1px solid var(--rule-strong);
+            color: var(--ink-mid);
+            padding: 7px 14px;
+            border-radius: 4px;
+            font-size: 13px;
+            font-weight: 400;
+            cursor: pointer;
+            transition: border-color 0.15s, color 0.15s, background 0.15s;
+            font-family: var(--font-body);
+        }
+
+        .chip:hover {
+            border-color: var(--blue);
+            color: var(--blue);
+            background: var(--blue-tint);
+        }
+
+        /* ── Conversation thread ── */
+        .thread { }
+
+        .msg-block {
+            display: flex;
+            gap: 0;
+            border-bottom: 1px solid var(--rule);
+            animation: appear 0.22s ease;
+        }
+
+        @keyframes appear {
+            from { opacity: 0; transform: translateY(8px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        .msg-block.user-block { background: var(--cream); }
+        .msg-block.bot-block  { background: var(--white); }
+
+        .msg-gutter {
+            width: 64px;
+            flex-shrink: 0;
+            padding: 18px 0 0 20px;
+        }
+
+        .msg-label {
+            font-family: var(--font-mono);
+            font-size: 10px;
+            font-weight: 500;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+
+        .user-block .msg-label  { color: var(--ink-light); }
+        .bot-block  .msg-label  { color: var(--blue); }
+
+        .msg-body {
+            flex: 1;
+            padding: 18px 32px 18px 0;
+        }
+
+        .msg-text {
+            font-size: 15px;
+            line-height: 1.65;
+            color: var(--ink);
+            font-weight: 400;
+        }
+
+        .user-block .msg-text { color: var(--ink-mid); }
+
+        .msg-time {
+            font-family: var(--font-mono);
+            font-size: 10px;
+            color: var(--ink-faint);
+            margin-top: 8px;
+        }
+
+        /* ── Correction ── */
+        .correction {
+            margin-top: 10px;
+            font-size: 12.5px;
+            color: var(--ink-light);
+            font-style: italic;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        /* ── Patent images ── */
+        .patent-grid {
+            margin-top: 16px;
+            display: grid;
+            gap: 12px;
+        }
+
+        .patent-grid.single { grid-template-columns: 1fr; max-width: 320px; }
+        .patent-grid.dual   { grid-template-columns: 1fr 1fr; }
+
+        .patent-card {
+            border: 1px solid var(--rule);
+            border-radius: 4px;
+            overflow: hidden;
+            cursor: pointer;
+            background: var(--cream);
+            transition: border-color 0.15s;
+        }
+
+        .patent-card:hover { border-color: var(--blue); }
+
+        .patent-img { width: 100%; height: auto; display: block; }
+
+        .patent-meta {
+            padding: 9px 12px;
+            background: var(--white);
+            border-top: 1px solid var(--rule);
+        }
+
+        .patent-title {
+            font-family: var(--font-mono);
+            font-size: 10.5px;
+            font-weight: 500;
+            color: var(--ink-mid);
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+        }
+
+        .patent-date {
+            font-size: 11.5px;
+            color: var(--ink-faint);
+            margin-top: 2px;
+        }
+
+        /* ── Link ── */
+        .link-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            margin-top: 14px;
+            color: var(--blue);
+            font-size: 13.5px;
+            font-weight: 500;
+            text-decoration: none;
+            border-bottom: 1px solid var(--blue);
+            padding-bottom: 1px;
+            transition: opacity 0.15s;
+        }
+
+        .link-btn:hover { opacity: 0.7; }
+
+        /* ── Follow-ups ── */
+        .followups {
+            margin-top: 16px;
+            padding-top: 14px;
+            border-top: 1px solid var(--rule);
+            display: flex;
+            flex-wrap: wrap;
+            gap: 7px;
+            align-items: center;
+        }
+
+        .fu-label {
+            font-family: var(--font-mono);
+            font-size: 9.5px;
+            font-weight: 500;
+            color: var(--ink-faint);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-right: 4px;
+        }
+
+        .fu-tag {
+            background: none;
+            border: 1px solid var(--rule-strong);
+            color: var(--ink-mid);
+            padding: 4px 11px;
+            border-radius: 3px;
+            font-size: 12.5px;
+            font-weight: 400;
+            cursor: pointer;
+            font-family: var(--font-body);
+            transition: border-color 0.15s, color 0.15s;
+        }
+
+        .fu-tag:hover {
+            border-color: var(--blue);
+            color: var(--blue);
+        }
+
+        /* ── Typing ── */
+        .typing-dots {
+            display: flex;
+            gap: 4px;
+            align-items: center;
+            padding: 4px 0;
+        }
+
+        .td {
+            width: 5px; height: 5px;
+            border-radius: 50%;
+            background: var(--ink-faint);
+            animation: td 1.2s infinite;
+        }
+
+        .td:nth-child(2) { animation-delay: 0.15s; }
+        .td:nth-child(3) { animation-delay: 0.3s; }
+
+        @keyframes td {
+            0%,60%,100% { transform: scale(1); opacity: 0.4; }
+            30%          { transform: scale(1.4); opacity: 1; }
+        }
+
+        /* ── Input ── */
+        .input-area {
+            border-top: 1px solid var(--rule);
+            background: var(--white);
+            flex-shrink: 0;
+        }
+
+        .quick-row {
+            padding: 12px 32px 0;
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+            border-bottom: 1px solid var(--cream-dark);
+        }
+
+        .qbtn {
+            background: none;
+            border: none;
+            color: var(--ink-light);
+            font-size: 12.5px;
+            font-weight: 400;
+            cursor: pointer;
+            font-family: var(--font-body);
+            padding: 8px 10px;
+            border-bottom: 2px solid transparent;
+            margin-bottom: -1px;
+            transition: color 0.15s, border-color 0.15s;
+            white-space: nowrap;
+        }
+
+        .qbtn:hover {
+            color: var(--blue);
+            border-bottom-color: var(--blue);
+        }
+
+        .input-row {
+            display: flex;
+            align-items: flex-end;
+            padding: 14px 32px 20px;
+            gap: 12px;
+        }
+
+        .input-wrap { flex: 1; position: relative; }
+
+        .ibox {
+            width: 100%;
+            padding: 12px 44px 12px 0;
+            background: none;
+            border: none;
+            border-bottom: 1.5px solid var(--rule-strong);
+            color: var(--ink);
+            font-size: 15px;
+            font-family: var(--font-body);
+            font-weight: 400;
+            outline: none;
+            resize: none;
+            min-height: 44px;
+            max-height: 100px;
+            line-height: 1.5;
+            transition: border-color 0.2s;
+        }
+
+        .ibox::placeholder { color: var(--ink-faint); }
+        .ibox:focus { border-bottom-color: var(--blue); }
+        .ibox:disabled { opacity: 0.4; cursor: not-allowed; }
+
+        .char-hint {
+            position: absolute;
+            bottom: 4px; right: 0;
+            font-family: var(--font-mono);
+            font-size: 10px;
+            color: var(--ink-faint);
+        }
+
+        .sbtn {
+            background: var(--ink);
+            border: none;
+            color: var(--white);
+            width: 40px;
+            height: 40px;
+            border-radius: 4px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            transition: background 0.15s;
+            margin-bottom: 6px;
+        }
+
+        .sbtn:hover:not(:disabled) { background: var(--blue); }
+        .sbtn:disabled { background: var(--rule-strong); cursor: not-allowed; }
+
+        /* ── Modal ── */
+        .modal {
+            display: none;
+            position: fixed; inset: 0;
+            background: rgba(28,24,18,0.85);
+            z-index: 999;
+            justify-content: center;
+            align-items: center;
+            padding: 24px;
+        }
+
+        .modal.open { display: flex; }
+
+        .modal-inner { position: relative; max-width: 88vw; }
+
+        .mimg {
+            max-width: 100%;
+            max-height: 84vh;
+            border-radius: 4px;
+            display: block;
+            box-shadow: 0 12px 48px rgba(0,0,0,0.5);
+        }
+
+        .mclose {
+            position: absolute;
+            top: -38px; right: 0;
+            background: rgba(255,255,255,0.12);
+            border: 1px solid rgba(255,255,255,0.2);
+            color: white;
+            width: 30px; height: 30px;
+            border-radius: 3px;
+            font-size: 15px;
+            cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+        }
+
+        .mclose:hover { background: rgba(255,255,255,0.22); }
+
+        .mlbl {
+            margin-top: 10px;
+            font-family: var(--font-mono);
+            font-size: 11px;
+            color: rgba(255,255,255,0.45);
+            text-align: center;
+            letter-spacing: 0.05em;
+        }
+
+        /* ── Responsive ── */
+        @media (max-width: 640px) {
+            .shell { border: none; }
+            .header { padding: 0 16px; }
+            .welcome { padding: 36px 16px 28px; }
+            .welcome-headline { font-size: 30px; }
+            .msg-gutter { width: 44px; padding-left: 14px; }
+            .msg-body { padding: 16px 16px 16px 0; }
+            .quick-row { padding: 10px 16px 0; }
+            .input-row { padding: 12px 16px 16px; }
+            .patent-grid.dual { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="shell">
+
+    <!-- Header -->
+    <div class="header">
+        <div class="header-top">
+            <div class="brand">
+                <div class="brand-mark">
+                    <!-- Simple S lettermark -->
+                    <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+                        <path d="M13 5.5C13 4.12 11.88 3 10.5 3h-3A2.5 2.5 0 0 0 5 5.5c0 1.38 1.12 2.5 2.5 2.5h3A2.5 2.5 0 0 1 13 10.5 2.5 2.5 0 0 1 10.5 13h-3A2.5 2.5 0 0 1 5 10.5"
+                              stroke="#F6F1E9" stroke-width="1.6" stroke-linecap="round"/>
+                    </svg>
+                </div>
+                <div class="brand-name">Spheruler <em>AI</em></div>
+            </div>
+            <div class="header-right">
+                <div class="status-badge">
+                    <span class="dot" id="statusDot"></span>
+                    <span id="statusText">connecting</span>
+                </div>
+            </div>
+        </div>
+        <div class="header-rule"></div>
+    </div>
+
+    <!-- Messages -->
+    <div class="messages" id="messages">
+
+        <!-- Welcome -->
+        <div class="welcome" id="welcomeMsg">
+            <div class="welcome-eyebrow">Spheruler Solutions · AI Assistant</div>
+            <h1 class="welcome-headline">Ask me anything<br>about <em>Spheruler.</em></h1>
+            <p class="welcome-sub">Products, patents, technology, founders, location — I know it all. Just ask.</p>
+            <div class="chips">
+                <div class="chip" onclick="sendQuick('who are the founders')">Founders</div>
+                <div class="chip" onclick="sendQuick('what products do you offer')">Products</div>
+                <div class="chip" onclick="sendQuick('show me patent images')">Patent Images</div>
+                <div class="chip" onclick="sendQuick('what is the indian patent')">Indian Patent</div>
+                <div class="chip" onclick="sendQuick('tell me about the us patent')">US Patent</div>
+                <div class="chip" onclick="sendQuick('what is FCF technology')">FCF Technology</div>
+                <div class="chip" onclick="sendQuick('where are you located')">Location</div>
+            </div>
+        </div>
+
+        <div class="thread" id="thread"></div>
+
+    </div>
+
+    <!-- Input -->
+    <div class="input-area">
+        <div class="quick-row">
+            <button class="qbtn" onclick="sendQuick('who are the founders')">Founders</button>
+            <button class="qbtn" onclick="sendQuick('what products do you offer')">Products</button>
+            <button class="qbtn" onclick="sendQuick('show me patent images')">Patents</button>
+            <button class="qbtn" onclick="sendQuick('what is FCF technology')">FCF</button>
+            <button class="qbtn" onclick="sendQuick('what is AccuPan')">AccuPan</button>
+            <button class="qbtn" onclick="sendQuick('contact information')">Contact</button>
+        </div>
+        <div class="input-row">
+            <div class="input-wrap">
+                <textarea id="userInput" class="ibox" placeholder="Ask a question…" rows="1" autocomplete="off"></textarea>
+                <div class="char-hint" id="charCount">0 / 500</div>
+            </div>
+            <button class="sbtn" id="sendBtn" title="Send">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                    <path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/>
+                </svg>
+            </button>
+        </div>
+    </div>
+
+</div>
+
+<!-- Modal -->
+<div class="modal" id="imgModal" onclick="closeModal()">
+    <div class="modal-inner" onclick="event.stopPropagation()">
+        <button class="mclose" onclick="closeModal()">✕</button>
+        <img class="mimg" id="modalImg" src="" alt="Patent Diagram">
+        <div class="mlbl" id="modalLbl"></div>
+    </div>
+</div>
+
+<script>
+    const API    = 'http://localhost:5000/api/chat';
+    const HEALTH = 'http://localhost:5000/api/health';
+
+    const threadEl  = document.getElementById('thread');
+    const inputEl   = document.getElementById('userInput');
+    const sendBtn   = document.getElementById('sendBtn');
+    const statusDot = document.getElementById('statusDot');
+    const statusTxt = document.getElementById('statusText');
+    const charEl    = document.getElementById('charCount');
+    const welcomeEl = document.getElementById('welcomeMsg');
+    const modal     = document.getElementById('imgModal');
+    const mImg      = document.getElementById('modalImg');
+    const mLbl      = document.getElementById('modalLbl');
+    const messagesEl = document.getElementById('messages');
+
+    let msgCount = 0;
+
+    /* helpers */
+    function ts() {
+        return new Date().toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit', hour12: true });
+    }
+
+    function esc(t) {
+        const d = document.createElement('div');
+        d.textContent = t; return d.innerHTML;
+    }
+
+    function patentMeta(filename) {
+        if (/indian|india/i.test(filename)) return { label: 'INDIAN PATENT', date: 'Granted 24 July 2017' };
+        if (/us|usa|united/i.test(filename))  return { label: 'U.S. PATENT',    date: 'Granted 9 November 2021' };
+        return { label: 'PATENT DIAGRAM', date: 'Click to enlarge' };
+    }
+
+    /* modal */
+    function openModal(src, lbl) { mImg.src = src; mLbl.textContent = lbl; modal.classList.add('open'); }
+    function closeModal()        { modal.classList.remove('open'); }
+
+    /* connection */
+    async function checkConn() {
+        try {
+            if ((await fetch(HEALTH)).ok) {
+                statusDot.className = 'dot';
+                statusTxt.textContent = 'online';
+                return true;
+            }
+        } catch(_) {}
+        statusDot.className = 'dot off';
+        statusTxt.textContent = 'offline';
+        return false;
+    }
+
+    /* welcome */
+    function hideWelcome() {
+        if (msgCount === 0 && welcomeEl) {
+            welcomeEl.style.transition = 'opacity 0.2s';
+            welcomeEl.style.opacity = '0';
+            setTimeout(() => welcomeEl.remove(), 220);
+        }
+    }
+
+    /* messages */
+    function addUser(text) {
+        hideWelcome(); msgCount++;
+        const block = document.createElement('div');
+        block.className = 'msg-block user-block';
+        block.innerHTML = `
+            <div class="msg-gutter"><div class="msg-label">You</div></div>
+            <div class="msg-body">
+                <div class="msg-text">${esc(text)}</div>
+                <div class="msg-time">${ts()}</div>
+            </div>`;
+        threadEl.appendChild(block);
+        scrollDown();
+    }
+
+    function addBot(data) {
+        const block = document.createElement('div');
+        block.className = 'msg-block bot-block';
+
+        /* images */
+        const urls = data.image_urls || (data.image_url ? [data.image_url] : []);
+        let imgHtml = '';
+        if (data.has_image && urls.length) {
+            const cls = urls.length > 1 ? 'dual' : 'single';
+            const cards = urls.map(url => {
+                const fn = url.split('/').pop();
+                const m  = patentMeta(fn);
+                return `<div class="patent-card" onclick="openModal('${url}', '${m.label} — ${m.date}')">
+                    <img class="patent-img" src="${url}" alt="${m.label}"
+                         onerror="this.closest('.patent-card').style.padding='20px';this.remove();this.parentNode.innerHTML+='<p style=\\'font-size:12px;color:#7A7268\\'>Image unavailable — check backend</p>'">
+                    <div class="patent-meta">
+                        <div class="patent-title">${m.label}</div>
+                        <div class="patent-date">${m.date}</div>
+                    </div>
+                </div>`;
+            }).join('');
+            imgHtml = `<div class="patent-grid ${cls}">${cards}</div>`;
+        }
+
+        /* correction */
+        let corrHtml = '';
+        if (data.corrected && data.original !== data.corrected) {
+            const lbl = data.correction_type === 'genz' ? 'Interpreted as' : 'Corrected to';
+            corrHtml = `<div class="correction">— ${lbl}: &ldquo;${esc(data.corrected)}&rdquo;</div>`;
+        }
+
+        /* link */
+        let linkHtml = '';
+        if (data.link) {
+            linkHtml = `<a href="${data.link}" target="_blank" rel="noopener noreferrer" class="link-btn">
+                ${esc(data.link_label || 'Visit Website')} ↗
+            </a>`;
+        }
+
+        /* followups */
+        let fuHtml = '';
+        if (data.followups && data.followups.length) {
+            const tags = data.followups.map(t =>
+                `<button class="fu-tag" onclick="sendQuick('${esc(t)}')">${esc(t)}</button>`
+            ).join('');
+            fuHtml = `<div class="followups">
+                <span class="fu-label">Also ask —</span>
+                ${tags}
+            </div>`;
+        }
+
+        block.innerHTML = `
+            <div class="msg-gutter"><div class="msg-label">AI</div></div>
+            <div class="msg-body">
+                <div class="msg-text">${esc(data.response)}</div>
+                ${corrHtml}
+                ${imgHtml}
+                ${linkHtml}
+                ${fuHtml}
+                <div class="msg-time">${ts()}</div>
+            </div>`;
+        threadEl.appendChild(block);
+        scrollDown();
+    }
+
+    /* typing */
+    function addTyping() {
+        const block = document.createElement('div');
+        block.className = 'msg-block bot-block';
+        block.id = 'typing';
+        block.innerHTML = `
+            <div class="msg-gutter"><div class="msg-label">AI</div></div>
+            <div class="msg-body">
+                <div class="typing-dots">
+                    <div class="td"></div><div class="td"></div><div class="td"></div>
+                </div>
+            </div>`;
+        threadEl.appendChild(block);
+        scrollDown();
+    }
+
+    function rmTyping() { document.getElementById('typing')?.remove(); }
+
+    function scrollDown() {
+        messagesEl.scrollTo({ top: messagesEl.scrollHeight, behavior: 'smooth' });
+    }
+
+    /* send */
+    async function send() {
+        const msg = inputEl.value.trim();
+        if (!msg || msg.length > 500) return;
+
+        inputEl.disabled = true; sendBtn.disabled = true;
+        addUser(msg);
+        inputEl.value = ''; charEl.textContent = '0 / 500'; inputEl.style.height = 'auto';
+        addTyping();
+
+        try {
+            const res = await fetch(API, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ message: msg })
+            });
+            rmTyping();
+            addBot(await res.json());
+        } catch(e) {
+            rmTyping();
+            addBot({ response: 'Could not reach the backend server. Please make sure it is running at http://localhost:5000.' });
+            statusDot.className = 'dot off'; statusTxt.textContent = 'offline';
+        } finally {
+            inputEl.disabled = false; sendBtn.disabled = false; inputEl.focus();
+        }
+    }
+
+    function sendQuick(msg) { inputEl.value = msg; send(); }
+
+    /* events */
+    sendBtn.addEventListener('click', send);
+    inputEl.addEventListener('keydown', e => {
+        if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); send(); }
+    });
+    inputEl.addEventListener('input', () => {
+        const l = inputEl.value.length;
+        charEl.textContent = `${l} / 500`;
+        charEl.style.color = l > 450 ? '#C0392B' : '';
+        inputEl.style.height = 'auto';
+        inputEl.style.height = Math.min(inputEl.scrollHeight, 100) + 'px';
+    });
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
+    /* init */
+    window.addEventListener('load', () => { checkConn(); inputEl.focus(); });
+    setInterval(checkConn, 15000);
+</script>
+</body>
+</html>
